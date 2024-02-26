@@ -1,6 +1,6 @@
 name: camera_info
-description: A new Flutter plugin project.
-version: 0.0.1
+description: Get info about camera.
+version: 0.0.1+1
 homepage:
 
 environment:
