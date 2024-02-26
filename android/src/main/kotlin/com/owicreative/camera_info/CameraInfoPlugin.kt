@@ -7,6 +7,11 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraManager
+import android.os.Build
+import android.util.Size
+import androidx.annotation.RequiresApi
 
 /** CameraInfoPlugin */
 class CameraInfoPlugin: FlutterPlugin, MethodCallHandler {
@@ -37,5 +42,25 @@ class CameraInfoPlugin: FlutterPlugin, MethodCallHandler {
     channel.setMethodCallHandler(null)
   }
 
+  @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+  fun getSupportedResolutions(): Size? {
+    var maxResolution:Size = Size(0,0)
 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      val manager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+      try {
+        val cameraId = manager.cameraIdList[0]
+        val characteristics = manager.getCameraCharacteristics(cameraId)
+        val map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+        map?.getOutputSizes(android.media.MediaRecorder::class.java)?.forEach { size ->
+          if(maxResolution.width > size.width || maxResolution.height > size.height ) {
+            maxResolution = size;
+          }
+        }
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
+    }
+    return maxResolution
+  }
 }
