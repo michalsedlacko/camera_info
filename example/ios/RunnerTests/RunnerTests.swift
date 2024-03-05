@@ -13,11 +13,11 @@ class RunnerTests: XCTestCase {
   func testGetPlatformVersion() {
     let plugin = CameraInfoPlugin()
 
-    let call = FlutterMethodCall(methodName: "getPlatformVersion", arguments: [])
+    let call = FlutterMethodCall(methodName: "isFlashAvailable", arguments: [])
 
     let resultExpectation = expectation(description: "result block must be called.")
     plugin.handle(call) { result in
-      XCTAssertEqual(result as! String, "iOS " + UIDevice.current.systemVersion)
+      XCTAssertEqual(result as! Bool, false)
       resultExpectation.fulfill()
     }
     waitForExpectations(timeout: 1)

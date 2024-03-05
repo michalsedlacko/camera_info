@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:camera_info/camera_info.dart';
 import 'package:camera_info/camera_info_platform_interface.dart';
@@ -9,6 +11,16 @@ class MockCameraInfoPlatform
     implements CameraInfoPlatform {
   @override
   Future<bool> isFlashAvailable() => Future.value(false);
+
+  @override
+  Future<Size?> getMaxResolution({bool video = false}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isManualFocusSupported() {
+    throw UnimplementedError();
+  }
 }
 
 void main() {

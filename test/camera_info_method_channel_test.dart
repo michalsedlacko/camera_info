@@ -26,4 +26,8 @@ void main() {
   test('isFlashAvailable', () async {
     expect(await platform.isFlashAvailable(), true);
   });
+
+  test('getMaxResolution', () async {
+    expect(await platform.getMaxResolution(), const Size(100, 100));
+  });
 }

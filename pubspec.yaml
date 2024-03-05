@@ -1,6 +1,6 @@
 name: camera_info
 description: Get info about camera.
-version: 0.0.1+1
+version: 0.0.1+2
 homepage:
 
 environment:
