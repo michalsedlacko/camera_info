@@ -27,8 +27,7 @@ public class CameraInfoPlugin: NSObject, FlutterPlugin {
   }
 
   private func getMaxResolution() -> [String: Any]? {
-    
-    guard let device = AVCaptureDevice.default(for: .video, position: .back) else {
+      guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back) else {
         print("No video capture devices available")
         return nil
     }
@@ -51,20 +50,20 @@ public class CameraInfoPlugin: NSObject, FlutterPlugin {
     return resolution
   }
 
-  func isManualFocusSupported() -> Bool {
+  private func isManualFocusSupported() -> Bool {
     // Check if the device has a camera available
-    guard let device = AVCaptureDevice.default(for: .video, position: .back) else {
+      guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back) else {
         print("No video capture devices available")
         return false
     }
     
     // Check if manual focus is supported
-    let captureDevice = AVCaptureDevice.default(for: .video)
+    let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
     
     if let supportsFocus = captureDevice?.isFocusModeSupported(.locked) {
         return supportsFocus
-    } else {
-        return false
     }
-}
+    
+    return false
+  }
 }
